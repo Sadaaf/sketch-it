@@ -3,26 +3,7 @@ const container = document.createElement("div");
 container.className = "container";
 
 let clickHeld = false;
-
-handleMouseClickHeld = () => {
-  clickHeld = true;
-};
-
-handleMousePointerEntered = (e) => {
-  if (clickHeld) {
-    const buttonClassName = e.target.classList[0];
-    const button = document.querySelector(`.${buttonClassName}`);
-    button.style.backgroundColor = "black";
-  }
-};
-
-handleMouseClickReleased = () => {
-  if (clickHeld) clickHeld = false;
-};
-
-document.body.addEventListener("pointerup", handleMouseClickReleased);
-
-document.body.addEventListener("pointerdown", handleMouseClickHeld);
+let color = "#000";
 
 function createGrid(row = 16, column = 16) {
   const rowElements = [];
@@ -36,6 +17,7 @@ function createGrid(row = 16, column = 16) {
       columnElement < 10 ? `0${columnElement}` : columnElement
     }`;
 
+    // Generates buttons
     rowElements.forEach((rowElement) => {
       const button = document.createElement("button");
       button.className = `button${
@@ -52,20 +34,21 @@ function createGrid(row = 16, column = 16) {
 // Add container to the html body
 document.body.appendChild(container);
 
-// Adding click event lister to Create New Grid button
+document.body.addEventListener("pointerup", handleMouseClickReleased);
+document.body.addEventListener("pointerdown", handleMouseClickHeld);
+
 const recreateButton = document.querySelector(".recreate");
 recreateButton.addEventListener("click", takeUserInput);
 
-//////////////////////
-// Helper functions //
-//////////////////////
+const randomizeColorButton = document.querySelector(".randomize-color");
+randomizeColorButton.addEventListener(
+  "click",
+  () => (color = getRandomColor())
+);
 
-function generateCells(maxNumberOfCells, cells) {
-  for (let i = 0; i < maxNumberOfCells; i++) {
-    cells.push(i);
-  }
-}
-
+//////////////////////
+// Event Listeners //
+////////////////////
 function takeUserInput() {
   let row = 0;
   let column = 0;
@@ -77,6 +60,42 @@ function takeUserInput() {
   }
   container.replaceChildren();
   createGrid(row, column);
+}
+
+function handleMouseClickHeld() {
+  clickHeld = true;
+}
+
+function handleMousePointerEntered(e) {
+  if (clickHeld) {
+    const buttonClassName = e.target.classList[0];
+    const button = document.querySelector(`.${buttonClassName}`);
+    button.style.backgroundColor = color;
+  }
+}
+
+function handleMouseClickReleased() {
+  if (clickHeld) clickHeld = false;
+}
+
+//////////////////////
+// Helper functions //
+//////////////////////
+
+// Creates an array of cell names
+function generateCells(maxNumberOfCells, cells) {
+  for (let i = 0; i < maxNumberOfCells; i++) {
+    cells.push(i);
+  }
+}
+
+function getRandomColor() {
+  var letters = "0123456789ABCDEF";
+  var color = "#";
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 }
 
 ////////////////
