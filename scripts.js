@@ -24,7 +24,7 @@ document.body.addEventListener("pointerup", handleMouseClickReleased);
 
 document.body.addEventListener("pointerdown", handleMouseClickHeld);
 
-function createGrid(row = 100, column = 100) {
+function createGrid(row = 16, column = 16) {
   const rowElements = [];
   const columnElements = [];
   generateCells(row, rowElements);
@@ -49,14 +49,12 @@ function createGrid(row = 100, column = 100) {
   });
 }
 
-createGrid();
-
 // Add container to the html body
 document.body.appendChild(container);
 
 // Adding click event lister to Create New Grid button
 const recreateButton = document.querySelector(".recreate");
-recreateButton.addEventListener("click", () => {});
+recreateButton.addEventListener("click", takeUserInput);
 
 //////////////////////
 // Helper functions //
@@ -67,3 +65,21 @@ function generateCells(maxNumberOfCells, cells) {
     cells.push(i);
   }
 }
+
+function takeUserInput() {
+  let row = 0;
+  let column = 0;
+  while (row < 1 || row > 100 || !Number.isInteger(row)) {
+    row = Number(prompt("Row = ?"));
+  }
+  while (column < 1 || column > 100 || !Number.isInteger(column)) {
+    column = Number(prompt("Column = ?"));
+  }
+  container.replaceChildren();
+  createGrid(row, column);
+}
+
+////////////////
+// App Runner //
+////////////////
+createGrid();

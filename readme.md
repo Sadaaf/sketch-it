@@ -1,5 +1,14 @@
 # ETCH A SKETCH
 
+[Click here to try it](https://sadaaf.github.io/sketch-it/). To run it locally
+
+```bash
+git clone https://github.com/Sadaaf/sketch-it
+cd sketch-it
+```
+
+then open the index.html
+
 ## Requirements
 
 - User gets a default grid
