@@ -24,7 +24,7 @@ document.body.addEventListener("pointerup", handleMouseClickReleased);
 
 document.body.addEventListener("pointerdown", handleMouseClickHeld);
 
-function createGrid(row = 16, column = 16) {
+function createGrid(row = 100, column = 100) {
   const rowElements = [];
   const columnElements = [];
   generateCells(row, rowElements);
@@ -32,11 +32,15 @@ function createGrid(row = 16, column = 16) {
 
   columnElements.forEach((columnElement) => {
     const column = document.createElement("div");
-    column.className = `column${columnElement}`;
+    column.className = `column${
+      columnElement < 10 ? `0${columnElement}` : columnElement
+    }`;
 
     rowElements.forEach((rowElement) => {
       const button = document.createElement("button");
-      button.className = `button${columnElement}${rowElement}`;
+      button.className = `button${
+        columnElement < 10 ? `0${columnElement}` : columnElement
+      }${rowElement < 10 ? `0${rowElement}` : rowElement}`;
       button.addEventListener("pointerenter", handleMousePointerEntered);
       column.appendChild(button);
     });
